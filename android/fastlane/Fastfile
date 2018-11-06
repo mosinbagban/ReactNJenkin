@@ -29,6 +29,9 @@ platform :android do
   hockey(
     api_token: "62388a02db594661a9605e01b72a0b73"
   )
+  
+  # Generate the changelog based on commit messages since your last tag
+   changelog_from_git_commits
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end

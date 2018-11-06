@@ -10,6 +10,9 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
+		/*
+		Adding just comment to check the build genration.
+		*/
         return "ReactNJenkin";
     }
 }
