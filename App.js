@@ -22,7 +22,7 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome Mohsin!</Text>
-        <Text style={styles.instructions}>Added batch command in Jenkin.</Text>
+        <Text style={styles.instructions}>This is for new jenkin jobs.</Text>
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
     );
