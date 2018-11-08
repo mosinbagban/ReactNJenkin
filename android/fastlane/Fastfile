@@ -27,7 +27,7 @@ platform :android do
    # crashlytics
    # upload to HockeyApp
   hockey(
-    api_token: "62388a02db594661a9605e01b72a0b73"
+    api_token: "d582e3a6b3334821ad9e3419d2f4a39d"
   )
   
   # Generate the changelog based on commit messages since your last tag
