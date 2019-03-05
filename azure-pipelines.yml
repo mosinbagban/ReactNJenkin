@@ -29,5 +29,6 @@ steps:
     - task: Gradle@2
     inputs:
     gradleWrapperFile: 'gradlew' 
+    chmod +x gradlew
     ./gradlew assembleDebug
   displayName: 'Build android'
