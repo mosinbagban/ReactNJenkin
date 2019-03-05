@@ -21,6 +21,7 @@ steps:
 
 - script: |
     cd android
+    gem install bundler
     bundle update --bundler
     fastlane beta
   displayName: 'Build android'
