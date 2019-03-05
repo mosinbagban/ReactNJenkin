@@ -29,5 +29,5 @@ steps:
     - task: Gradle@2
     inputs:
     gradleWrapperFile: 'gradlew' 
-    sudo fastlane beta
+    ./gradlew assembleDebug
   displayName: 'Build android'
