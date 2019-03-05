@@ -30,7 +30,7 @@ steps:
     inputs:
     gradleWrapperFile: 'gradlew' 
     chmod +x gradlew
-    ./gradlew assembleDebug
+    fastlane beta
      displayName: 'Build android'
      
     - task: AppCenterDistribute@1
