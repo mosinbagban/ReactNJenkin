@@ -26,5 +26,6 @@ steps:
     sudo gem install bundler:1.17.1
     sudo gem install fastlane:2.117.1
     sudo bundle install
+    chmod +x gradlew
     fastlane beta
   displayName: 'Build android'
