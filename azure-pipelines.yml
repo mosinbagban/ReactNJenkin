@@ -21,6 +21,6 @@ steps:
 
 - script: |
     cd android
-    bundle install
+    bundle update --bundler
     fastlane beta
   displayName: 'Build android'
