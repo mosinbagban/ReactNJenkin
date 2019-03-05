@@ -31,4 +31,14 @@ steps:
     gradleWrapperFile: 'gradlew' 
     chmod +x gradlew
     ./gradlew assembleDebug
-  displayName: 'Build android'
+     displayName: 'Build android'
+     
+    - task: AppCenterDistribute@1
+    inputs:
+      appSlug:mohsin5887/ThreeTes 
+      displayName: 'Publish to App center'
+
+    
+ 
+
+  
