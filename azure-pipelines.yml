@@ -22,5 +22,4 @@ steps:
 - script: |
     cd android
     sudo gem install fastlane
-    fastlane beta
   displayName: 'Build android'
