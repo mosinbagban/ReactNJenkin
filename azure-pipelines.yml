@@ -27,4 +27,4 @@ steps:
     sudo gem install fastlane:2.117.1
     sudo bundle install
     fastlane beta
-     displayName: 'Build android'
+  displayName: 'Build android'
