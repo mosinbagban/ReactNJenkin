@@ -30,8 +30,6 @@ steps:
     inputs:
     chmod +x gradlew
     fastlane beta
-    appSlug: 'MohsinTest/ReactAzureTest'
-    appFile: './app/build/outputs/apk/debug/app-debug.apk' 
      displayName: 'Build android'
      
    # - task: AppCenterDistribute@1
