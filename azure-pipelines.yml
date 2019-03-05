@@ -35,9 +35,9 @@ steps:
      
     - task: AppCenterDistribute@1
     inputs:
-      appSlug:MohsinTest/ReactAzureTest
-      appFile: ./app/build/outputs/apk/debug/app-debug.apk 
-      displayName: 'Publish to App center'
+      appSlug: 'MohsinTest/ReactAzureTest'
+      appFile: './app/build/outputs/apk/debug/app-debug.apk' 
+    displayName: 'Publish to App center'
 
     
  
