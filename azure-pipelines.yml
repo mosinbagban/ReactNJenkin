@@ -30,21 +30,4 @@ steps:
     fastlane beta
   displayName: 'Build android'
 
-- task: AppCenterTest@1
-  displayName: 'Test with Visual Studio App Center'
-  inputs:
-    appFile: './app/build/outputs/apk/debug/app-debug.apk'
-    appSlug: 'mohsin5887/ThreeTest'
-    username: 'mohsin5887'
-    password: 'Zainul@786'
-    serverEndpoint:
-    artifactsDirectory:
-    frameworkOption: 'appium'
-    appiumBuildDirectory:
-    calabashProjectDirectory:
-    uiTestBuildDirectory:
-    credentialsOption: 'serviceEndpoint'
-    devices: 'android'
-    localeOption: 'en_GB'
-    prepareTests: false
-    runTests: false
+
