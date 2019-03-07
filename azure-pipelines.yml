@@ -1,32 +1,28 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
-trigger:
-- master
+# Android
+# Build your Android project with Gradle.
+# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
 
 pool:
   vmImage: 'macOS 10.13'
 
 steps:
-- task: NodeTool@0
+- task: Gradle@2
   inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
+    workingDirectory: ''
+    gradleWrapperFile: 'gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'assembleDebug'
 
-- script: |
-    npm install
-    export LC_ALL=en_US.UTF-8
-    export LANG=en_US.UTF-8
-  displayName: 'npm install dependencies'
+- task: CopyFiles@2
+  inputs:
+    contents: '**/*.apk'
+    targetFolder: '$(build.artifactStagingDirectory)'
 
-- script: |
-    cd android
-    sudo gem install bundler:1.17.1
-    sudo gem install fastlane:2.117.1
-    sudo bundle install
-    chmod +x gradlew
-  displayName: 'Build android'
-
-
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)'
+    artifactName: 'drop'
+    artifactType: 'container'
