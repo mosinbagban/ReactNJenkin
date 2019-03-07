@@ -43,9 +43,9 @@ steps:
     apkFiles: '**/*.apk'
     jarsign: true
     jarsignerKeystoreFile: 'my-release-key.keystore'
-    jarsignerKeystorePassword: '$(jarsignerKeystorePassword)'
-    jarsignerKeystoreAlias: '$(KeystoreAlias)'
-    jarsignerKeyPassword: '$(jarsignerKeyPassword)'
+    jarsignerKeystorePassword: 'threeuk'
+    jarsignerKeystoreAlias: 'my-key-alias'
+    jarsignerKeyPassword: 'threeuk'
     zipalign: true
 
 - task: AppCenterDistribute@2
