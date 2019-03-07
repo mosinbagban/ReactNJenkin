@@ -1,10 +1,7 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
-trigger:
-- master
+# Android
+# Build your Android project with Gradle.
+# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/android
 
 pool:
   vmImage: 'macOS 10.13'
@@ -21,13 +18,41 @@ steps:
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
 
-- script: |
-    cd android
-    sudo gem install bundler:1.17.1
-    sudo gem install fastlane:2.117.1
-    sudo bundle install
-    chmod +x gradlew
-    fastlane beta
-  displayName: 'Build android'
+- task: Gradle@2
+  inputs:
+    workingDirectory: '$(system.defaultWorkingDirectory)/android'
+    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'assembleRelease'
 
+- task: CopyFiles@2
+  inputs:
+    contents: '**/*.apk'
+    targetFolder: '$(build.artifactStagingDirectory)'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)'
+    artifactName: 'drop'
+    artifactType: 'container'
+  
+- task: AndroidSigning@2
+  inputs:
+    apkFiles: '**/*.apk'
+    jarsign: true
+    jarsignerKeystoreFile: 'my-release-key.keystore'
+    jarsignerKeystorePassword: 'threeuk'
+    jarsignerKeystoreAlias: 'my-key-alias'
+    jarsignerKeyPassword: 'threeuk'
+    zipalign: true
+
+- task: AppCenterDistribute@2
+  displayName: 'Deploy to Visual Studio App Center'
+  inputs:
+    serverEndpoint: 'MyAppcenter'
+    appSlug: MohsinTest/ReactAzureTest
+    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
+    symbolsIncludeParentDirectory: false
+    releaseNotesInput: 'Azure devops to app center'
