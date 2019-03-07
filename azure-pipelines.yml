@@ -7,6 +7,17 @@ pool:
   vmImage: 'macOS 10.13'
 
 steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+  displayName: 'npm install dependencies'
+
 - task: Gradle@2
   inputs:
     workingDirectory: '$(system.defaultWorkingDirectory)/android'
