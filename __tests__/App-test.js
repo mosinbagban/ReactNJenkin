@@ -1,10 +1,12 @@
+// __tests__/Intro-test.js
 import React from 'react';
-import App from '../App';
+import Intro from '../App';
+
 import renderer from 'react-test-renderer';
 
-test('snapshot testing for App component', () => {
- const tree = renderer.create(<App />).toJSON();
- expect(tree).toMatchSnapshot();
+test('App renders correctly', () => {
+  const tree = renderer.create(<Intro />).toJSON();
+  expect(tree).toMatchSnapshot();
 });
 
 
