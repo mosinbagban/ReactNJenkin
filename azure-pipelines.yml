@@ -9,12 +9,12 @@ pool:
 steps:
 - task: Gradle@2
   inputs:
-    workingDirectory: '/android'
-    gradleWrapperFile: 'gradlew'
+    workingDirectory: '$(system.defaultWorkingDirectory)/android'
+    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: false
     testResultsFiles: '**/TEST-*.xml'
-    tasks: 'assembleDebug'
+    tasks: 'assembleRelease'
 
 - task: CopyFiles@2
   inputs:
@@ -26,3 +26,22 @@ steps:
     pathToPublish: '$(build.artifactStagingDirectory)'
     artifactName: 'drop'
     artifactType: 'container'
+  
+- task: AndroidSigning@2
+  inputs:
+    apkFiles: '**/*.apk'
+    jarsign: true
+    jarsignerKeystoreFile: 'my-release-key.keystore'
+    jarsignerKeystorePassword: '$(jarsignerKeystorePassword)'
+    jarsignerKeystoreAlias: '$(KeystoreAlias)'
+    jarsignerKeyPassword: '$(jarsignerKeyPassword)'
+    zipalign: true
+
+- task: AppCenterDistribute@2
+  displayName: 'Deploy to Visual Studio App Center'
+  inputs:
+    serverEndpoint: 'App center'
+    appSlug: MohsinTest/ReactAzureTest
+    appFile: 'app/build/outputs/apk/release/app-release-unsigned.apk'
+    symbolsIncludeParentDirectory: false
+    releaseNotesInput: 'Azure devops to app center'
