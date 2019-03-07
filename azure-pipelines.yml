@@ -40,7 +40,7 @@ steps:
 - task: AppCenterDistribute@2
   displayName: 'Deploy to Visual Studio App Center'
   inputs:
-    serverEndpoint: 'App center'
+    serverEndpoint: 'MyAppcenter'
     appSlug: MohsinTest/ReactAzureTest
     appFile: 'app/build/outputs/apk/release/app-release-unsigned.apk'
     symbolsIncludeParentDirectory: false
