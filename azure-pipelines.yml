@@ -53,6 +53,6 @@ steps:
   inputs:
     serverEndpoint: 'MyAppcenter'
     appSlug: MohsinTest/ReactAzureTest
-    appFile: 'app/build/outputs/apk/release/app-release-unsigned.apk'
+    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
     symbolsIncludeParentDirectory: false
     releaseNotesInput: 'Azure devops to app center'
