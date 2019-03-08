@@ -67,7 +67,7 @@ steps:
 - task: Xcode@5
   inputs:
     sdk: 'iphoneos'
-    scheme: 'ReactNJenkin'
+    scheme: ''
     configuration: 'Release'
     xcodeVersion: 'default' 
     exportPath: '$(agent.buildDirectory)/output/$(sdk)/$(configuration)'
