@@ -57,10 +57,6 @@ steps:
     symbolsIncludeParentDirectory: false
     releaseNotesInput: 'Azure devops to app center'
 
-    variables:
-  scheme: 'ReactNJenkin'
-  sdk: 'iphoneos'
-  configuration: 'Release'
 
 - task: InstallAppleProvisioningProfile@1
   inputs:
@@ -70,18 +66,20 @@ steps:
 
 - task: Xcode@5
   inputs:
-    sdk: '$(sdk)'
-    scheme: '$(scheme)'
-    configuration: '$(configuration)'
-    xcodeVersion: 'default' # Options: default, 10, 9, 8, specifyPath
+    sdk: 'iphoneos'
+    scheme: 'ReactNJenkin'
+    configuration: 'Release'
+    xcodeVersion: 'default' 
     exportPath: '$(agent.buildDirectory)/output/$(sdk)/$(configuration)'
-    signingOption: 'default' # Options: nosign, default, manual, auto
-    useXcpretty: 'false' # Makes it easier to diagnose build failures
+    signingOption: 'default'
+    useXcpretty: 'false'
 
+- task: CopyFiles@2
   inputs:
     contents: '**/*.ipa'
     targetFolder: '$(build.artifactStagingDirectory)/build'
 - task: PublishBuildArtifacts@1
+
 
 # App Center Distribute
 # Distribute app builds to testers and users via App Center
