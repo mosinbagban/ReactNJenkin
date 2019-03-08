@@ -56,3 +56,48 @@ steps:
     appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
     symbolsIncludeParentDirectory: false
     releaseNotesInput: 'Azure devops to app center'
+
+    variables:
+  scheme: 'ReactNJenkin'
+  sdk: 'iphoneos'
+  configuration: 'Release'
+
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provProfileSecureFile: 'RebusAEMM.mobileprovision'
+    certSecureFile: 'aCertificates.p12'
+    certPwd: 'Rebus@123'
+
+- task: Xcode@5
+  inputs:
+    sdk: '$(sdk)'
+    scheme: '$(scheme)'
+    configuration: '$(configuration)'
+    xcodeVersion: 'default' # Options: default, 10, 9, 8, specifyPath
+    exportPath: '$(agent.buildDirectory)/output/$(sdk)/$(configuration)'
+    signingOption: 'default' # Options: nosign, default, manual, auto
+    useXcpretty: 'false' # Makes it easier to diagnose build failures
+
+  inputs:
+    contents: '**/*.ipa'
+    targetFolder: '$(build.artifactStagingDirectory)/build'
+- task: PublishBuildArtifacts@1
+
+# App Center Distribute
+# Distribute app builds to testers and users via App Center
+- task: AppCenterDistribute@1
+  inputs:
+    serverEndpoint: 'MyAppcenter'
+    appSlug: MohsinTest/ReactAzureTest
+    appFile: '$(build.artifactstagingdirectory)/**/*.ipa'
+    #symbolsOption: 'Apple' # Optional. Options: apple
+    #symbolsPath: # Optional
+    #symbolsPdbFiles: '**/*.pdb' # Optional
+    #symbolsDsymFiles: # Optional
+    #symbolsMappingTxtFile: # Optional
+    #symbolsIncludeParentDirectory: # Optional
+    #releaseNotesOption: 'input' # Options: input, file
+    #releaseNotesInput: # Required when releaseNotesOption == Input
+    #releaseNotesFile: # Required when releaseNotesOption == File
+    #isMandatory: false # Optional
+    #distributionGroupId: # Optional
