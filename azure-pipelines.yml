@@ -35,7 +35,7 @@ steps:
     scheme: ''
     sdk: 'iphoneos'
     configuration: 'Release'
-    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj/project.xcworkspace'
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/*.xcodeproj/project.xcworkspace'
     xcodeVersion: '10' 
     signingOption: 'manual' 
     useXcpretty: true
