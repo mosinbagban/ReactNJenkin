@@ -22,10 +22,10 @@ steps:
     scheme: ''
     sdk: 'iphoneos'
     configuration: 'Release'
-    xcWorkspacePath: '**/ReactNJenkin.xcodeproj/project.xcworkspace'
-    xcodeVersion: 'default' 
-    signingOption: 'auto' 
-    useXcpretty: false
+    xcWorkspacePath: '**/*.xcodeproj/*.xcworkspace'
+    xcodeVersion: '10' 
+    signingOption: 'manual' 
+    useXcpretty: true
 
 - task: CopyFiles@2
   inputs:
