@@ -39,7 +39,7 @@ steps:
     configuration: 'Release'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     xcodeVersion: '10' 
-    signingOption: 'manual' 
+    signingOption: 'auto' 
     useXcpretty: true
 
 - task: CopyFiles@2
