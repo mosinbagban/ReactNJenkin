@@ -48,14 +48,6 @@ steps:
     jarsignerKeyPassword: 'threeuk'
     zipalign: true
 
-- task: AppCenterTest@1
-  inputs:
-    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk' 
-    artifactsDirectory: '$(build.artifactStagingDirectory)/AppCenterTest' 
-    prepareTests: true
-    frameworkOption: uitest
-    uiTestBuildDirectory: $(build.artifactStagingDirectory)/test
-
 - task: AppCenterDistribute@2
   displayName: 'Deploy to Visual Studio App Center'
   inputs:
