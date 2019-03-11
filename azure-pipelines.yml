@@ -19,16 +19,6 @@ steps:
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
-  
-- task: InstallAppleCertificate@2
-  inputs:
-    certSecureFile: 'aCertificates.p12'
-    certPwd: 'Rebus@123'
-
-- task: InstallAppleProvisioningProfile@1
-  inputs:
-    provProfileSecureFile: 'RebusAEMM.mobileprovision'
-
 
 - task: Xcode@5
   inputs:
@@ -41,6 +31,15 @@ steps:
     xcodeVersion: '10' 
     signingOption: 'default' 
     useXcpretty: true
+
+- task: InstallAppleCertificate@2
+  inputs:
+    certSecureFile: 'aCertificates.p12'
+    certPwd: 'Rebus@123'
+
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provProfileSecureFile: 'RebusAEMM.mobileprovision'
 
 - task: CopyFiles@2
   inputs:
