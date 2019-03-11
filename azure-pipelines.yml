@@ -7,31 +7,6 @@ pool:
   vmImage: 'macOS 10.13'
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    cd $(system.defaultWorkingDirectory)/ios/ReactNJenkin
-    ls
-    export LC_ALL=en_US.UTF-8
-    export LANG=en_US.UTF-8
-  displayName: 'npm install dependencies'
-
-- task: Xcode@5
-  inputs:
-    workingDirectory: '$(system.defaultWorkingDirectory)/ios'
-    actions: 'build'
-    scheme: 'ReactNJenkin'
-    sdk: 'iphoneos'
-    configuration: 'Release'
-    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
-    xcodeVersion: '10' 
-    signingOption: 'default' 
-    useXcpretty: true
-
 - task: InstallAppleCertificate@2
   inputs:
     certSecureFile: 'aCertificates.p12'
@@ -40,6 +15,35 @@ steps:
 - task: InstallAppleProvisioningProfile@1
   inputs:
     provProfileSecureFile: 'RebusAEMM.mobileprovision'
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    yarn install
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+  displayName: 'npm install dependencies'
+
+- task: Xcode@5
+  inputs:
+    workingDirectory: '$(system.defaultWorkingDirectory)/ios'
+    actions: 'build'
+    scheme: ''
+    sdk: 'iphoneos'
+    configuration: 'Release'
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    exportOptions: 'auto'
+    signingOption: 'manual' 
+    signingIdentity: 'Rebus Mobility (3TZF4QK823)'
+    provisioningProfileUuid: '56b2f86a-7e7d-4209-959c-b76032569920'
+    provisioningProfileName: 'RebusAEMM.mobileprovision'
+    teamId: '5JR7LRDRL9'
+    xcodeVersion: '10' 
+    useXcpretty: true
 
 - task: CopyFiles@2
   inputs:
