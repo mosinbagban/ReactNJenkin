@@ -7,87 +7,37 @@ pool:
   vmImage: 'macOS 10.13'
 
 steps:
-- task: NodeTool@0
+- task: InstallAppleCertificate@2
   inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    export LC_ALL=en_US.UTF-8
-    export LANG=en_US.UTF-8
-  displayName: 'npm install dependencies'
-
-- task: Gradle@2
-  inputs:
-    workingDirectory: '$(system.defaultWorkingDirectory)/android'
-    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
-    gradleOptions: '-Xmx3072m'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'assembleRelease'
-
-- task: CopyFiles@2
-  inputs:
-    contents: '**/*.apk'
-    targetFolder: '$(build.artifactStagingDirectory)'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)'
-    artifactName: 'drop'
-    artifactType: 'container'
-  
-- task: AndroidSigning@2
-  inputs:
-    apkFiles: '**/*.apk'
-    jarsign: true
-    jarsignerKeystoreFile: 'my-release-key.keystore'
-    jarsignerKeystorePassword: 'threeuk'
-    jarsignerKeystoreAlias: 'my-key-alias'
-    jarsignerKeyPassword: 'threeuk'
-    zipalign: true
-
-- task: AppCenterDistribute@2
-  displayName: 'Deploy to Visual Studio App Center'
-  inputs:
-    serverEndpoint: 'MyAppcenter'
-    appSlug: MohsinTest/ReactAzureTest
-    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
-    symbolsIncludeParentDirectory: false
-    releaseNotesInput: 'Azure devops to app center'
-
+    certSecureFile: 'aCertificates.p12'
+    certPwd: 'Rebus@123'
 
 - task: InstallAppleProvisioningProfile@1
   inputs:
     provProfileSecureFile: 'RebusAEMM.mobileprovision'
-    certSecureFile: 'aCertificates.p12'
-    certPwd: 'Rebus@123'
 
 - task: Xcode@5
   inputs:
-    sdk: 'iphoneos'
+    actions: 'build'
     scheme: ''
+    sdk: 'iphoneos'
     configuration: 'Release'
+    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
     xcodeVersion: 'default' 
-    exportPath: '$(agent.buildDirectory)/output/$(sdk)/$(configuration)'
-    signingOption: 'default'
-    useXcpretty: 'false'
+    signingOption: 'auto' 
+    useXcpretty: false
 
 - task: CopyFiles@2
   inputs:
     contents: '**/*.ipa'
-    targetFolder: '$(build.artifactStagingDirectory)/build'
-- task: PublishBuildArtifacts@1
+    targetFolder: '$(build.artifactStagingDirectory)'
 
 
-# App Center Distribute
-# Distribute app builds to testers and users via App Center
 - task: AppCenterDistribute@1
   inputs:
-    serverEndpoint: 'MyAppcenter'
-    appSlug: MohsinTest/ReactAzureTest
-    appFile: '$(build.artifactstagingdirectory)/**/*.ipa'
+    serverEndpoint: MyAppcenter
+    appSlug: MohsinTest/ReactAzureTesiOS
+    appFile: $(build.artifactstagingdirectory)/**/*.ipa
     #symbolsOption: 'Apple' # Optional. Options: apple
     #symbolsPath: # Optional
     #symbolsPdbFiles: '**/*.pdb' # Optional
