@@ -28,13 +28,13 @@ steps:
   inputs:
     actions: 'clean build'
     scheme: 'ReactNJenkin'
-    sdk: 'iphoneos'
+    sdk: 'iphoneos11.4'
     configuration: 'Release'
     packageApp: true
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     signingOption: 'auto' 
     signingIdentity: 'iPhone Developer: Rebus Mobility (3TZF4QK823)'
-    xcodeVersion: '10' 
+    xcodeVersion: 'default' 
     useXcpretty: true
 
 - task: CopyFiles@2
