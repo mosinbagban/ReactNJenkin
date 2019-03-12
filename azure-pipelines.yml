@@ -1,8 +1,3 @@
-# Android
-# Build your Android project with Gradle.
-# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/android
-
 pool:
   vmImage: 'macOS 10.13'
 
@@ -14,8 +9,7 @@ steps:
 
 - task: InstallAppleProvisioningProfile@1
   inputs:
-    provProfileSecureFile: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
-    provisioningProfileLocation: secureFiles
+    provProfileSecureFile: 'RebusAEMM.mobileprovision'
 
 - task: NodeTool@0
   inputs:
@@ -33,16 +27,12 @@ steps:
   inputs:
     actions: 'build'
     scheme: 'ReactNJenkin'
-    sdk: 'iphoneos'
+    sdk: 'iphonesimulator'
     configuration: 'Release'
     packageApp: true
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     signingOption: 'auto' 
     signingIdentity: 'iPhone Developer: Rebus Mobility (3TZF4QK823)'
-    provisioningProfileUuid: '56b2f86a-7e7d-4209-959c-b76032569920'
-    provisioningProfileName: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
-    teamId: '5JR7LRDRL9'
-    exportMethod: 'package'
     xcodeVersion: '10' 
     useXcpretty: true
 
