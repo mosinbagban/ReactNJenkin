@@ -17,6 +17,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    xcodebuild -showsdks
     npm install
     yarn install
     export LC_ALL=en_US.UTF-8
@@ -25,9 +26,9 @@ steps:
 
 - task: Xcode@5
   inputs:
-    actions: 'build'
+    actions: 'clean build'
     scheme: 'ReactNJenkin'
-    sdk: 'iphonesimulator'
+    sdk: 'iphoneos'
     configuration: 'Release'
     packageApp: true
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
