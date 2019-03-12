@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App renders correctly 1`] = `
+exports[`Welcome Back Azure DevOps 1`] = `
 <View
   style={
     Object {
@@ -20,7 +20,7 @@ exports[`App renders correctly 1`] = `
       }
     }
   >
-    Welcome Mohsin!
+    Welcome Back Azure DevOps!
   </Text>
   <Text
     style={
