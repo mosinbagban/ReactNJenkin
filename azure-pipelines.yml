@@ -7,6 +7,15 @@ pool:
   vmImage: 'macOS 10.13'
 
 steps:
+- task: InstallAppleCertificate@2
+  inputs:
+    certSecureFile: 'aCertificates.p12'
+    certPwd: 'Rebus@123'
+
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provProfileSecureFile: 'RebusAEMM.mobileprovision'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '8.x'
@@ -14,45 +23,48 @@ steps:
 
 - script: |
     npm install
+    yarn install
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
 
-- task: Gradle@2
+- task: Xcode@5
   inputs:
-    workingDirectory: '$(system.defaultWorkingDirectory)/android'
-    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
-    gradleOptions: '-Xmx3072m'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'assembleRelease'
+    workingDirectory: '$(system.defaultWorkingDirectory)/ios'
+    actions: 'build'
+    scheme: 'ReactNJenkin'
+    sdk: 'iphonesimulator'
+    configuration: 'Release'
+    packageApp: true
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    signingOption: 'manual' 
+    exportMethod: 'package'
+    signingIdentity: 'iPhone Developer: Rebus Mobility (3TZF4QK823)'
+    #provisioningProfileUuid: '56b2f86a-7e7d-4209-959c-b76032569920'
+    #provisioningProfileName: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
+    teamId: '5JR7LRDRL9'
+    xcodeVersion: '10' 
+    useXcpretty: true
 
 - task: CopyFiles@2
   inputs:
-    contents: '**/*.apk'
+    contents: '**/*.ipa'
     targetFolder: '$(build.artifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)'
-    artifactName: 'drop'
-    artifactType: 'container'
-  
-- task: AndroidSigning@2
-  inputs:
-    apkFiles: '**/*.apk'
-    jarsign: true
-    jarsignerKeystoreFile: 'my-release-key.keystore'
-    jarsignerKeystorePassword: 'threeuk'
-    jarsignerKeystoreAlias: 'my-key-alias'
-    jarsignerKeyPassword: 'threeuk'
-    zipalign: true
 
-- task: AppCenterDistribute@2
-  displayName: 'Deploy to Visual Studio App Center'
+- task: AppCenterDistribute@1
   inputs:
-    serverEndpoint: 'MyAppcenter'
-    appSlug: MohsinTest/ReactAzureTest
-    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
-    symbolsIncludeParentDirectory: false
-    releaseNotesInput: 'Azure devops to app center'
+    serverEndpoint: MyAppcenter
+    appSlug: MohsinTest/ReactAzureTesiOS
+    appFile: $(build.artifactstagingdirectory)/**/*.ipa
+    #symbolsOption: 'Apple' # Optional. Options: apple
+    #symbolsPath: # Optional
+    #symbolsPdbFiles: '**/*.pdb' # Optional
+    #symbolsDsymFiles: # Optional
+    #symbolsMappingTxtFile: # Optional
+    #symbolsIncludeParentDirectory: # Optional
+    #releaseNotesOption: 'input' # Options: input, file
+    #releaseNotesInput: # Required when releaseNotesOption == Input
+    #releaseNotesFile: # Required when releaseNotesOption == File
+    #isMandatory: false # Optional
+    #distributionGroupId: # Optional
