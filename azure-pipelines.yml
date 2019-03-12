@@ -14,7 +14,8 @@ steps:
 
 - task: InstallAppleProvisioningProfile@1
   inputs:
-    provProfileSecureFile: 'RebusAEMM.mobileprovision'
+    provProfileSecureFile: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
+    provisioningProfileLocation: secureFiles
 
 - task: NodeTool@0
   inputs:
@@ -37,6 +38,10 @@ steps:
     packageApp: true
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     signingOption: 'manual' 
+    signingIdentity: 'iPhone Developer: Rebus Mobility (3TZF4QK823)'
+    provisioningProfileUuid: '56b2f86a-7e7d-4209-959c-b76032569920'
+    provisioningProfileName: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
+    teamId: '5JR7LRDRL9'
     exportMethod: 'package'
     xcodeVersion: '10' 
     useXcpretty: true
