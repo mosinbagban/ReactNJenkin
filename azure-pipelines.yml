@@ -9,7 +9,7 @@ steps:
 
 - task: InstallAppleProvisioningProfile@1
   inputs:
-    provProfileSecureFile: 'RebusAEMM.mobileprovision'
+    provProfileSecureFile: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
 
 - task: NodeTool@0
   inputs:
