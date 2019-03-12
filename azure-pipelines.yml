@@ -26,7 +26,7 @@ steps:
 
 - task: Xcode@5
   inputs:
-    actions: 'clean build'
+    actions: 'build'
     scheme: 'ReactNJenkin'
     sdk: 'iphoneos11.4'
     configuration: 'Release'
