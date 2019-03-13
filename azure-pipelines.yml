@@ -67,15 +67,15 @@ steps:
 - task: Xcode@5
   inputs:
     actions: 'build'
-    scheme: ''
+    scheme: 'ReactNJenkin'
     sdk: 'iphoneos11.4'
-    configuration: 'Debug'
-    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    configuration: 'Release'
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj/project.xcworkspace'
     exportMethod: 'ad-hoc'
     signingOption: 'manual' 
     signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
     provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
     xcodeVersion: 'default' 
-    useXcpretty: true
+    useXcpretty: false
     
 
