@@ -1,58 +1,62 @@
-# Android
-# Build your Android project with Gradle.
-# Add steps that test, sign, and distribute the APK, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/android
-
 pool:
   vmImage: 'macOS 10.13'
 
 steps:
+- task: InstallAppleCertificate@2
+  inputs:
+    certSecureFile: 'aCertificates.p12'
+    certPwd: 'Rebus@123'
+
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provProfileSecureFile: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '8.x'
   displayName: 'Install Node.js'
 
 - script: |
+    xcodebuild -showsdks
     npm install
+    yarn install
+    react-native bundle --platform ios --dev false --entry-file index.js --bundle-output iOS/main.jsbundle
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
 
-- task: Gradle@2
+- task: Xcode@5
   inputs:
-    workingDirectory: '$(system.defaultWorkingDirectory)/android'
-    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
-    gradleOptions: '-Xmx3072m'
-    publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
-    tasks: 'assembleRelease'
+    actions: 'build'
+    scheme: 'ReactNJenkin'
+    sdk: 'iphoneos11.4'
+    configuration: 'Release'
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    signingOption: 'manual' 
+    signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+    provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+    xcodeVersion: 'default' 
+    useXcpretty: true
 
 - task: CopyFiles@2
   inputs:
-    contents: '**/*.apk'
+    contents: '**/*.ipa'
     targetFolder: '$(build.artifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: '$(build.artifactStagingDirectory)'
-    artifactName: 'drop'
-    artifactType: 'container'
-  
-- task: AndroidSigning@2
-  inputs:
-    apkFiles: '**/*.apk'
-    jarsign: true
-    jarsignerKeystoreFile: 'my-release-key.keystore'
-    jarsignerKeystorePassword: 'threeuk'
-    jarsignerKeystoreAlias: 'my-key-alias'
-    jarsignerKeyPassword: 'threeuk'
-    zipalign: true
 
-- task: AppCenterDistribute@2
-  displayName: 'Deploy to Visual Studio App Center'
+- task: AppCenterDistribute@1
   inputs:
-    serverEndpoint: 'MyAppcenter'
-    appSlug: MohsinTest/ReactAzureTest
-    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
-    symbolsIncludeParentDirectory: false
-    releaseNotesInput: 'Azure devops to app center'
+    serverEndpoint: MyAppcenter
+    appSlug: MohsinTest/ReactAzureTesiOS
+    appFile: $(build.artifactstagingdirectory)/**/*.ipa
+    #symbolsOption: 'Apple' # Optional. Options: apple
+    #symbolsPath: # Optional
+    #symbolsPdbFiles: '**/*.pdb' # Optional
+    #symbolsDsymFiles: # Optional
+    #symbolsMappingTxtFile: # Optional
+    #symbolsIncludeParentDirectory: # Optional
+    #releaseNotesOption: 'input' # Options: input, file
+    #releaseNotesInput: # Required when releaseNotesOption == Input
+    #releaseNotesFile: # Required when releaseNotesOption == File
+    #isMandatory: false # Optional
+    #distributionGroupId: # Optional
