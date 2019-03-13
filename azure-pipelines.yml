@@ -25,19 +25,6 @@ steps:
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
 
-- task: Xcode@5
-  inputs:
-    actions: 'build'
-    scheme: 'ReactNJenkin'
-    sdk: 'iphoneos11.4'
-    configuration: 'Release'
-    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
-    signingOption: 'manual' 
-    signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
-    provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
-    xcodeVersion: 'default' 
-    useXcpretty: true
-
 - task: Gradle@2
   inputs:
     workingDirectory: '$(system.defaultWorkingDirectory)/android'
@@ -77,5 +64,18 @@ steps:
     symbolsIncludeParentDirectory: false
     releaseNotesInput: 'Azure devops to app center'
 
-
+- task: Xcode@5
+  inputs:
+    actions: 'build'
+    scheme: 'ReactNJenkin'
+    sdk: 'iphoneos11.4'
+    configuration: 'Release'
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    exportMethod: 'ad-hoc'
+    signingOption: 'manual' 
+    signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+    provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+    xcodeVersion: 'default' 
+    useXcpretty: true
+    
 
