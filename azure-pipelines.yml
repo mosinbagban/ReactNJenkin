@@ -32,8 +32,9 @@ steps:
     sdk: 'iphoneos11.4'
     configuration: 'Release'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
-    signingOption: 'auto' 
-    signingIdentity: 'iPhone Developer: Rebus Mobility (3TZF4QK823)'
+    signingOption: 'manual' 
+    signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+    provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
     xcodeVersion: 'default' 
     useXcpretty: true
 
