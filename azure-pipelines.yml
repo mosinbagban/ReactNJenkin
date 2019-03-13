@@ -54,7 +54,7 @@ steps:
   inputs:
     serverEndpoint: MyAppcenter
     appSlug: MohsinTest/ReactAzureTesiOS
-    appFile: $(build.artifactstagingdirectory)/**/*.ipa
+    appFile: $(system.defaultWorkingDirectory)/**/*.ipa
     symbolsOption: 'Apple'
     releaseNotesOption: 'input'
     releaseNotesInput: 'Releasing to App center for CT team'
