@@ -21,7 +21,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome Back Azure DevOps!</Text>
+        <Text style={styles.welcome}>Welcome to 3UK App</Text>
         <Text style={styles.instructions}>This build will upload to App center.</Text>
         <Text style={styles.instructions}>{instructions}</Text>
       </View>

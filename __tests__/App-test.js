@@ -4,7 +4,7 @@ import Intro from '../App';
 
 import renderer from 'react-test-renderer';
 
-test('App renders correctly', () => {
+test('Welcome Back Azure DevOps', () => {
   const tree = renderer.create(<Intro />).toJSON();
   expect(tree).toMatchSnapshot();
 });
