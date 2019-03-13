@@ -32,7 +32,7 @@ steps:
     sdk: 'iphoneos11.4'
     configuration: 'Release'
     packageApp: true
-    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj/project.xcworkspace'
     signingOption: 'auto' 
     signingIdentity: 'iPhone Developer: Rebus Mobility (3TZF4QK823)'
     xcodeVersion: 'default' 
