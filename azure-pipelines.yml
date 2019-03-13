@@ -68,7 +68,7 @@ steps:
   inputs:
     actions: 'build'
     scheme: 'ReactNJenkin'
-    sdk: 'iphoneos11.4'
+    sdk: 'iphonesimulator11.4'
     configuration: 'Release'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     exportMethod: 'ad-hoc'
