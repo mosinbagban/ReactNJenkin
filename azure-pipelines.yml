@@ -38,31 +38,44 @@ steps:
     xcodeVersion: 'default' 
     useXcpretty: true
 
+- task: Gradle@2
+  inputs:
+    workingDirectory: '$(system.defaultWorkingDirectory)/android'
+    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'assembleRelease'
+
 - task: CopyFiles@2
   inputs:
-    contents: '**/*.ipa'
+    contents: '**/*.apk'
     targetFolder: '$(build.artifactStagingDirectory)'
-    
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: '$(build.artifactStagingDirectory)'
     artifactName: 'drop'
     artifactType: 'container'
-
-
-- task: AppCenterDistribute@1
+  
+- task: AndroidSigning@2
   inputs:
-    serverEndpoint: MyAppcenter
-    appSlug: MohsinTest/ReactAzureTesiOS
-    appFile: $(system.defaultWorkingDirectory)/**/*.ipa
-    symbolsOption: 'Apple'
-    releaseNotesOption: 'input'
-    releaseNotesInput: 'Releasing to App center for CT team'
-    distributionGroupId: 'Collaborators'
-    #symbolsPath: # Optional
-    #symbolsPdbFiles: '**/*.pdb' # Optional
-    #symbolsDsymFiles: # Optional
-    #symbolsMappingTxtFile: # Optional
-    #symbolsIncludeParentDirectory: # Optional
-    #isMandatory: false # Optional
-    #distributionGroupId: # Optional
+    apkFiles: '**/*.apk'
+    jarsign: true
+    jarsignerKeystoreFile: 'my-release-key.keystore'
+    jarsignerKeystorePassword: 'threeuk'
+    jarsignerKeystoreAlias: 'my-key-alias'
+    jarsignerKeyPassword: 'threeuk'
+    zipalign: true
+
+- task: AppCenterDistribute@2
+  displayName: 'Deploy to Visual Studio App Center'
+  inputs:
+    serverEndpoint: 'MyAppcenter'
+    appSlug: MohsinTest/ReactAzureTest
+    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
+    symbolsIncludeParentDirectory: false
+    releaseNotesInput: 'Azure devops to app center'
+
+
+
