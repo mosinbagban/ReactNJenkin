@@ -29,7 +29,7 @@ steps:
   inputs:
     actions: 'build'
     scheme: 'ReactNJenkin'
-    sdk: 'iphonesimulator11.4'
+    sdk: 'iphoneos11.4'
     configuration: 'Release'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     signingOption: 'manual' 
