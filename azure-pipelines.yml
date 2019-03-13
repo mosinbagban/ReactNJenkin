@@ -25,38 +25,57 @@ steps:
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
 
+- task: Gradle@2
+  inputs:
+    workingDirectory: '$(system.defaultWorkingDirectory)/android'
+    gradleWrapperFile: '$(system.defaultWorkingDirectory)/android/gradlew'
+    gradleOptions: '-Xmx3072m'
+    publishJUnitResults: false
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'assembleRelease'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**/*.apk'
+    targetFolder: '$(build.artifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(build.artifactStagingDirectory)'
+    artifactName: 'drop'
+    artifactType: 'container'
+  
+- task: AndroidSigning@2
+  inputs:
+    apkFiles: '**/*.apk'
+    jarsign: true
+    jarsignerKeystoreFile: 'my-release-key.keystore'
+    jarsignerKeystorePassword: 'threeuk'
+    jarsignerKeystoreAlias: 'my-key-alias'
+    jarsignerKeyPassword: 'threeuk'
+    zipalign: true
+
+- task: AppCenterDistribute@2
+  displayName: 'Deploy to Visual Studio App Center'
+  inputs:
+    serverEndpoint: 'MyAppcenter'
+    appSlug: MohsinTest/ReactAzureTest
+    appFile: 'android/app/build/outputs/apk/release/app-release-unsigned.apk'
+    symbolsIncludeParentDirectory: false
+    releaseNotesInput: 'Azure devops to app center'
+
 - task: Xcode@5
   inputs:
     actions: 'build'
-    scheme: 'ReactNJenkin'
+    scheme: ''
     sdk: 'iphoneos11.4'
-    configuration: 'Release'
+    configuration: 'Debug'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
+    exportMethod: 'ad-hoc'
     signingOption: 'manual' 
     signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
     provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
     xcodeVersion: 'default' 
     useXcpretty: true
+    
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**/*.ipa'
-    targetFolder: '$(build.artifactStagingDirectory)'
-
-
-- task: AppCenterDistribute@1
-  inputs:
-    serverEndpoint: MyAppcenter
-    appSlug: MohsinTest/ReactAzureTesiOS
-    appFile: $(build.artifactstagingdirectory)/**/*.ipa
-    #symbolsOption: 'Apple' # Optional. Options: apple
-    #symbolsPath: # Optional
-    #symbolsPdbFiles: '**/*.pdb' # Optional
-    #symbolsDsymFiles: # Optional
-    #symbolsMappingTxtFile: # Optional
-    #symbolsIncludeParentDirectory: # Optional
-    #releaseNotesOption: 'input' # Options: input, file
-    #releaseNotesInput: # Required when releaseNotesOption == Input
-    #releaseNotesFile: # Required when releaseNotesOption == File
-    #isMandatory: false # Optional
-    #distributionGroupId: # Optional
