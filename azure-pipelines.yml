@@ -67,9 +67,9 @@ steps:
 - task: Xcode@5
   inputs:
     actions: 'build'
-    scheme: 'ReactNJenkin'
-    sdk: 'iphonesimulator11.4'
-    configuration: 'Release'
+    scheme: ''
+    sdk: 'iphoneos11.4'
+    configuration: 'Debug'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
     exportMethod: 'ad-hoc'
     signingOption: 'manual' 
