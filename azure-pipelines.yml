@@ -71,10 +71,10 @@ steps:
     sdk: 'iphoneos11.4'
     configuration: 'Release'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj/project.xcworkspace'
-    exportMethod: 'ad-hoc'
-    signingOption: 'manual' 
+    signingOption: 'auto' 
     signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
     provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+    provisioningProfileName: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
     xcodeVersion: 'default' 
     useXcpretty: false
     
