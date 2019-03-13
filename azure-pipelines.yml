@@ -49,14 +49,14 @@ steps:
     serverEndpoint: MyAppcenter
     appSlug: MohsinTest/ReactAzureTesiOS
     appFile: $(build.artifactstagingdirectory)/**/*.ipa
-    #symbolsOption: 'Apple' # Optional. Options: apple
+    symbolsOption: 'Apple'
+    releaseNotesOption: 'input'
+    releaseNotesInput: 'Releasing to App center for CT team'
+    distributionGroupId: 'Collaborators'
     #symbolsPath: # Optional
     #symbolsPdbFiles: '**/*.pdb' # Optional
     #symbolsDsymFiles: # Optional
     #symbolsMappingTxtFile: # Optional
     #symbolsIncludeParentDirectory: # Optional
-    #releaseNotesOption: 'input' # Options: input, file
-    #releaseNotesInput: # Required when releaseNotesOption == Input
-    #releaseNotesFile: # Required when releaseNotesOption == File
     #isMandatory: false # Optional
     #distributionGroupId: # Optional
