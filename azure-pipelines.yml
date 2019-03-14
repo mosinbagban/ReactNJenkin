@@ -20,7 +20,6 @@ steps:
     xcodebuild -showsdks
     npm install
     yarn install
-    react-native bundle --platform ios --dev false --entry-file index.js --bundle-output iOS/main.jsbundle
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
   displayName: 'npm install dependencies'
@@ -67,11 +66,11 @@ steps:
 - task: Xcode@5
   inputs:
     actions: 'build'
-    scheme: 'ReactNJenkin'
-    sdk: 'iphoneos11.4'
+    scheme: ''
+    sdk: 'iphoneos'
     configuration: 'Release'
     xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj/project.xcworkspace'
-    signingOption: 'auto' 
+    signingOption: 'manual' 
     signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
     provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
     provisioningProfileName: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
