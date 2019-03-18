@@ -63,18 +63,6 @@ steps:
     symbolsIncludeParentDirectory: false
     releaseNotesInput: 'Azure devops to app center'
 
-- task: Xcode@5
-  inputs:
-    actions: 'build'
-    scheme: 'ReactNJenkin'
-    sdk: 'iphoneos'
-    configuration: 'Release'
-    xcWorkspacePath: '$(system.defaultWorkingDirectory)/ios/ReactNJenkin.xcodeproj'
-    signingOption: 'manual' 
-    signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
-    provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
-    provisioningProfileName: '56b2f86a-7e7d-4209-959c-b76032569920.mobileprovision'
-    xcodeVersion: 'default' 
-    useXcpretty: false
+
     
 
